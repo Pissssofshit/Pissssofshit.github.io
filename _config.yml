@@ -3,14 +3,18 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
-description: ''
+title: 小黄的博客
+subtitle: '总角问道,白首无成'
 keywords:
-author: John Doe
+author: 黄枭帅
 language: en
 timezone: ''
+sidebar-avatar: img/avatar.jpg
 
+SEOTitle: golang技术博客
+email: 1412143367@qq.com
+description: "golang技术博客"
+keyword: "golang"
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
 url: http://example.com
