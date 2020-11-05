@@ -1,0 +1,124 @@
+#+TITLE: go-blog 设计restful风格的api
+#+OPTIONS: toc:nil num:3 H:4 ^:nil pri:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://gongzhitaao.org/orgcss/org.css"/>
+* go-blog 设计restful风格的api
+  
+** restful 风格的几大准则
+1. 以json接受和返回请求
+2. 使用名词结尾
+   解释:http请求方法已经有POST、DELETE、PUT、GET能分别对应增、删、改、查
+3. 名词用复数形式
+   解释:请求对应的是服务器的一种资源,资源往往都是复数的。如我们的博客文章表,也是命名为articles,而不是article
+4. 使用层级区分资源
+   解释:如我们想要获取评论,应当使用下面这样的形式
+#+begin_quote
+'/articles/:articleId/comments'
+#+END_QUOTE
+因为comments是articles的子级资源
+5. 接口应当接受筛选参数、排序和分页
+6. 标准化响应请求
+   常用的返回码如下:
+-400 Bad Request – This means that client-side input fails validation.
+-401 Unauthorized – This means the user isn’t not authorized to access a resource. It usually returns when the user isn’t authenticated.
+-403 Forbidden – This means the user is authenticated, but it’s not allowed to access a resource.
+-404 Not Found – This indicates that a resource is not found.
+-500 Internal server error – This is a generic server error. It probably shouldn’t be thrown explicitly.
+-502 Bad Gateway – This indicates an invalid response from an upstream server.
+-503 Service Unavailable – This indicates that something unexpected happened on server side (It can be anything like server overload, some parts of the system failed, etc.).
+
+7. 给接口加上版本号
+   解释:如下形式
+#+BEGIN_QUOTE
+/v1/employees
+#+END_QUOTE
+
+资料:
+[[https://stackoverflow.blog/2020/03/02/best-practices-for-rest-api-design/][rest api 博客]]
+
+
+** 给我们的博客设计接口
+
+| 功能     | HTTP方法 | 路径                         |
+| 用户注册 | POST     | /users                       |
+| 用户登录 | GET      | /tokens                      |
+| 用户更新 | PUT | /users/:user_id |
+| 用户删除 | DELETE | /users/:user_id |
+| 发表文章 | POST     | /users/:user_id/articles |
+| 编辑文章 | PUT      | /users/:user_id/articles/:article_id |
+| 删除文章 | DELETE   | /users/:user_id/articles/:article_id |
+
+解释一下用户登录为什么是/tokens;restful风格的接口将请求认为是对服务器资源的访问，而登录实质上是获取token资源的一个过程
+
+
+** 代码
+在项目中新建api/v1目录并新建文件UserService.go,然后写入如下代码
+#+BEGIN_SRC go
+type UserService struct {
+}
+
+func NewUserService() UserService {
+	return UserService{}
+}
+
+func (userService *UserService) Create(c *gin.Context) {
+
+}
+func (userService *UserService) Login(c *gin.Context) {
+
+}
+func (userService *UserService) Edit(c *gin.Context) {
+
+}
+
+func (userService *UserService) Delete(c *gin.Context) {
+
+}
+func (userService *UserService) PostArticles(c *gin.Context) {
+
+}
+
+func (userService *UserService) EditArticles(c *gin.Context) {
+
+}
+func (userService *UserService) DeleteArticles(c *gin.Context) {
+
+}
+
+#+END_SRC
+在项目根目录新建main.go,
+在main.go中写入如下代码
+#+BEGIN_SRC go
+	router := gin.Default()
+
+	//版本号v1
+	v1 := router.Group("/v1")
+	{
+		userService := service.NewUserService()
+		v1.POST("/users", userService.Create)
+		v1.GET("/tokens", userService.Login)
+		v1.PUT("/users/:user_id", userService.Edit)
+		v1.DELETE("/users/:user_id", userService.Delete)
+		v1.POST("/users/:user_id/articles", userService.PostArticles)
+		v1.PUT("/users/:user_id/articles/:article_id", userService.EditArticles)
+		v1.DELETE("/users/:user_id/articles/:article_id", userService.DeleteArticles)
+	}
+
+	router.Run(":8080")
+
+#+END_SRC 
+
+完整代码查看我的github项目
+#+BEGIN_SRC
+git clone git clone https://github.com/Pissssofshit/go-blo
+#+END_SRC
+,并检出分支
+#+BEGIN_SRC
+git checkout restfulapi设计
+#+END_SRC
+
+在项目下运行
+#+BEGIN_SRC
+go run main.go
+#+END_SRC
+
+项目就会运行在8080端口下

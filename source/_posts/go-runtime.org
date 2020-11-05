@@ -1,0 +1,87 @@
+* 问题
+** pprof，trace,race是什么 
+
+* go runtime简介
+go runtime 是什么？
+
+* go为什么轻量
+process->thread->goroutine (轻量usersoace thread)
+
+有栈协程 。。。// 无栈协程
+因为只是一个结构体，协程是不为操作系统所知的，它由编程语言层面实现，上下文切换不需要经过内核态
+
+Goroutine：就是咱们常用的用go关键字创建的执行体，它对应一个结构体g，结构体里保存了goroutine的堆栈信息
+Machine：表示操作系统的线程
+Processor：表示处理器，有了它才能建立G、M的联系
+
+#+begin_src go
+type g struct {
+    stack struct {
+        lo uintptr
+        hi uintptr
+    }                             // 栈内存：[stack.lo, stack.hi)
+    stackguard0    uintptr
+    stackguard1 uintptr
+
+    _panic       *_panic
+    _defer       *_defer
+    m            *m                // 当前的 m
+    sched        gobuf
+    stktopsp     uintptr        // 期望 sp 位于栈顶，用于回溯检查
+    param        unsafe.Pointer // wakeup 唤醒时候传递的参数
+    atomicstatus uint32
+    goid         int64
+    preempt      bool           // 抢占信号，stackguard0 = stackpreempt 的副本
+    timer        *timer         // 为 time.Sleep 缓存的计时器
+
+    ...
+}
+#+end_src
+Goroutine调度相关的数据存储在sched，在协程切换、恢复上下文的时候用到。
+#+begin_src go
+type gobuf struct {
+    sp   uintptr
+    pc   uintptr
+    g    guintptr
+    ret  sys.Uintreg
+    ...
+}
+#+end_src
+
+** pmg模型
+g代表一个用户代码执行流
+m代表执行者，底层线程
+m与cpu绑定
+结构体:
+#+begin_src go
+type m struct {
+    g0   *g 
+    curg *g
+    //
+    p             puintptr
+    nextp         puintptr
+    oldp          puintptr
+    ...
+}
+#+end_src
+
+1. g0：会深度参与运行时的调度过程，比如goroutine的创建、内存分配等
+2. curg：代表当前正在线程上执行的goroutine。
+
+线程数等于CPU个数的原因是，每个线程分配到一个CPU上就不至于出现线程的上下文切换，可以保证系统开销降到最低。
+
+
+p代表cpu
+*** csp
+CSP，全称Communicating Sequential Processes，意为通讯顺序进程，它是七大并发模型中的一种，它的核心观念是将两个并发执行的实体通过通道channel连接起来，所有的消息都通过channel传输
+
+
+任务队列 => n个线程 => 
+
+#局部性#
+go function()
+
+
+go的结构体
+#+begin_src go
+#+end_src

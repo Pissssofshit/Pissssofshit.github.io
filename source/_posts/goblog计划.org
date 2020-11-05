@@ -1,0 +1,20 @@
+1. restful api 路由设计
+
+2. 参数校验
+
+3. viper 读取配置文件
+
+3. gorm 
+
+   资料：https://spring.io/blog/2010/06/23/gorm-gotchas-part-1/
+
+   3.1 连接池
+
+   3.2 模型关联
+
+4. 中间件
+
+   4.1 jwt实现api鉴权
+
+   4.2 日志
+
