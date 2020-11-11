@@ -1,0 +1,37 @@
+* 面试题
+
+1.go怎么管理协程
+
+2.gin源码
+
+3.gin路由规则匹配
+
+4.gin http请求过程
+
+5.父进程杀掉，子进程会怎么样
+
+6.你的项目用到了哪些技术
+
+* 技术资料
+
+必看:
+[[https://geektutu.com/post/gee.html][七天用go从零实现系列]]
+
+[[https://zhuanlan.zhihu.com/p/259976327][协程]]
+
+视频:
+[[https://www.zhihu.com/people/kylin-lab/zvideos][幼麟实验室]]
+书籍:
+1. 重构
+   
+复习
+gmp模型
+运行时库
+
+* 问题
+unsafe库
+
+panic和defer的执行关系
+* 项目
+后台项目 
+https://www.gin-vue-admin.com/docs/server
