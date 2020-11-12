@@ -1,3 +1,9 @@
+---
+title: go垃圾回收
+date: 2020-11-09 15:50:28
+Tags:
+---
+
 # golang 语法知识点
 
 ## string
