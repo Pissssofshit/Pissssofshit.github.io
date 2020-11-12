@@ -27,9 +27,27 @@ tags:
 
   [go Test 单元测试简明教程](https://geektutu.com/post/quick-go-test.html)
 
-  
+- 系统设计
 
-  
+  - 资料
+
+    - github地址
+
+      [系统设计](https://github.com/xitu/system-design-primer/blob/translation/README-zh-Hans.md)
+
+  - 书籍
+
+    - 系统架构设计
+
+- nosql
+
+  - Hive
+
+- 有用的工具
+
+  - 正则表达式
+    - [github地址](https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md#1-%E5%9F%BA%E6%9C%AC%E5%8C%B9%E9%85%8D)
+    - 
 
 #### 书籍
 
@@ -50,4 +68,10 @@ tags:
 #### 这辈子可能不会再去看的但是确实想去看的资料
 
 [如何阅读《深入理解计算机系统》](https://www.zhihu.com/question/20402534/answer/124344760)
+
+
+
+#### 找书网站
+
+- https://b-ok.global/
 
